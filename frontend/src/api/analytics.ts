@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
-  baseURL: '/api/analytics',
+  baseURL: `${import.meta.env.VITE_API_URL || ''}/api/analytics`,
 });
 
 api.interceptors.request.use((config) => {

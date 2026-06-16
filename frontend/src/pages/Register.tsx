@@ -17,7 +17,7 @@ const Register = () => {
     setIsLoading(true);
     setError('');
     try {
-      const res = await axios.post('/api/auth/register', { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/register`, { email, password });
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
     } catch (err: any) {

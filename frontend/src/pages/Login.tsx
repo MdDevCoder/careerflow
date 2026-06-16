@@ -17,7 +17,7 @@ const Login = () => {
     setIsLoading(true);
     setError('');
     try {
-      const res = await axios.post('/api/auth/login', { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/login`, { email, password });
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
     } catch (err: any) {
@@ -31,7 +31,7 @@ const Login = () => {
     setIsLoading(true);
     setError('');
     try {
-      const res = await axios.post('/api/auth/demo');
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/demo`);
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
     } catch (err: any) {

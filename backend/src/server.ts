@@ -19,9 +19,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://careerflow-beta.vercel.app',
+    process.env.FRONTEND_URL || ''
+  ],
   credentials: true,
 };
 

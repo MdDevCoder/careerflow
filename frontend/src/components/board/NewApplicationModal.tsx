@@ -18,11 +18,15 @@ const NewApplicationModal = ({ onClose }: Props) => {
       job_title: jobTitle,
       status: 'Wishlist',
       priority: 'MEDIUM',
-      source: 'Direct',
+      source: 'Website',
     }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applications'] });
       onClose();
+    },
+    onError: (error) => {
+      console.error("Failed to create application:", error);
+      alert("Failed to create application. Please try again.");
     }
   });
 

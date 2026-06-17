@@ -58,9 +58,14 @@ const KanbanBoard = () => {
       await queryClient.cancelQueries({ queryKey: ['applications'] });
       const previousApps = queryClient.getQueryData(['applications']);
       
-      queryClient.setQueryData(['applications'], (old: Application[] | undefined) => {
-        if (!old) return [];
-        return old.map(app => app._id === id ? { ...app, status } : app);
+      queryClient.setQueryData(['applications'], (old: any) => {
+        if (!old || !old.pages) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page: Application[]) => 
+            page.map(app => app._id === id ? { ...app, status } : app)
+          )
+        };
       });
       
       return { previousApps };

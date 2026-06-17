@@ -59,16 +59,16 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
         <div>
           <label className="block text-xs font-medium text-stale uppercase mb-1">Status</label>
           <select {...register('status')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
-            {['Wishlist', 'Applied', 'Assessment', 'Interview', 'Offer', 'Rejected', 'Accepted'].map(s => <option key={s} value={s}>{s}</option>)}
+            {['Wishlist', 'Applied', 'Assessment', 'Interview', 'Offer', 'Rejected', 'Accepted'].map(s => <option key={s} value={s} className="bg-[#121212] text-white">{s}</option>)}
           </select>
           {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
         </div>
         <div>
           <label className="block text-xs font-medium text-stale uppercase mb-1">Priority</label>
           <select {...register('priority')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="LOW">Low</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="HIGH">High</option>
+            <option value="LOW" className="bg-[#121212] text-white">Low</option>
+            <option value="MEDIUM" className="bg-[#121212] text-white">Medium</option>
+            <option value="HIGH" className="bg-[#121212] text-white">High</option>
           </select>
           {errors.priority && <p className="text-red-500 text-xs mt-1">{errors.priority.message}</p>}
         </div>

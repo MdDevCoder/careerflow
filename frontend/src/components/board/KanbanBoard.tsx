@@ -7,7 +7,8 @@ import { getUpcomingInterviews } from '../../api/interviews';
 import KanbanColumn from './KanbanColumn';
 import KanbanCard from './KanbanCard';
 import SidePeekDrawer from './SidePeekDrawer';
-import { Search, LogOut, Filter, CalendarClock, Building2, Calendar, BarChart3, LayoutGrid } from 'lucide-react';
+import NewApplicationModal from './NewApplicationModal';
+import { Search, LogOut, Filter, CalendarClock, Building2, Calendar, BarChart3, LayoutGrid, Plus } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,7 @@ const KanbanBoard = () => {
   const [filterHealth, setFilterHealth] = useState<string>('ALL');
   const [filterSource, setFilterSource] = useState<string>('ALL');
   const [showFilters, setShowFilters] = useState(false);
+  const [showNewModal, setShowNewModal] = useState(false);
   
   const logout = useAuthStore(state => state.logout);
 
@@ -167,12 +169,21 @@ const KanbanBoard = () => {
             <Filter size={14} /> Filters {(filterPriority !== 'ALL' || filterHealth !== 'ALL' || filterSource !== 'ALL') && <span className="w-2 h-2 rounded-full bg-primary ml-1"></span>}
           </button>
         </div>
-        <button 
-          onClick={logout}
-          className="flex items-center gap-2 text-sm text-stale hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
-        >
-          <LogOut size={16} /> Logout
-        </button>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => setShowNewModal(true)}
+            className="flex items-center gap-2 text-sm text-white bg-primary hover:bg-primary/90 px-4 py-1.5 rounded-lg transition-colors shadow-sm"
+          >
+            <Plus size={16} /> New Application
+          </button>
+          <div className="h-4 w-[1px] bg-white/10"></div>
+          <button 
+            onClick={logout}
+            className="flex items-center gap-2 text-sm text-stale hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
+          >
+            <LogOut size={16} /> Logout
+          </button>
+        </div>
       </div>
 
       {/* Filter Bar */}
@@ -278,6 +289,8 @@ const KanbanBoard = () => {
         application={selectedApplication} 
         onClose={() => setSelectedApplication(null)} 
       />
+
+      {showNewModal && <NewApplicationModal onClose={() => setShowNewModal(false)} />}
     </div>
   );
 };

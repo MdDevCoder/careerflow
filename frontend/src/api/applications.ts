@@ -60,3 +60,8 @@ export const getApplicationActivities = async (id: string) => {
   const { data } = await api.get<ActivityLog[]>(`/${id}/activities`);
   return data;
 };
+
+export const createApplication = async (application: Partial<Application>) => {
+  const { data } = await api.post<Application>('/', application);
+  return data;
+};

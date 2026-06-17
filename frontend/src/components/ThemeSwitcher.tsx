@@ -28,19 +28,19 @@ export const ThemeSwitcher: React.FC = () => {
         >
           <DropdownMenu.Item 
             onClick={() => setTheme('light')}
-            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'light' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-white/5'}`}
+            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'light' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-surface-elevated'}`}
           >
             <Sun className="w-4 h-4" /> Light
           </DropdownMenu.Item>
           <DropdownMenu.Item 
             onClick={() => setTheme('dark')}
-            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'dark' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-white/5'}`}
+            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'dark' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-surface-elevated'}`}
           >
             <Moon className="w-4 h-4" /> Dark
           </DropdownMenu.Item>
           <DropdownMenu.Item 
             onClick={() => setTheme('system')}
-            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'system' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-white/5'}`}
+            className={`flex items-center gap-2 px-2 py-1.5 text-sm rounded-md cursor-pointer outline-none transition-colors ${theme === 'system' ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-surface-elevated'}`}
           >
             <Monitor className="w-4 h-4" /> System
           </DropdownMenu.Item>

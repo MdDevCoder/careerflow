@@ -28,7 +28,7 @@ const KanbanCard = ({ application, onClick }: Props) => {
       case 'HIGH': return 'bg-red-500/10 text-red-500 border-red-500/20';
       case 'MEDIUM': return 'bg-orange-500/10 text-orange-500 border-orange-500/20';
       case 'LOW': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
-      default: return 'bg-gray-500/10 text-gray-500 border-gray-500/20';
+      default: return 'bg-surface-elevated text-muted border-border/50';
     }
   };
 
@@ -49,7 +49,7 @@ const KanbanCard = ({ application, onClick }: Props) => {
       {...attributes}
       {...listeners}
       onClick={() => onClick(application)}
-      className="bg-surface border border-border rounded-xl p-4 cursor-grab active:cursor-grabbing hover:border-border/80 hover:bg-surface-elevated hover:shadow-md transition-all shadow-sm relative overflow-hidden group hover:-translate-y-0.5 duration-200"
+      className="bg-surface border border-border rounded-xl p-4 cursor-grab active:cursor-grabbing hover:border-border/80 hover:bg-surface-elevated hover:shadow-md transition-all shadow-sm relative overflow-hidden group hover:-translate-y-0.5 duration-200 shrink-0 flex flex-col"
     >
       <div className={`absolute top-0 left-0 w-1 h-full ${getHealthColor(application.health_score)} opacity-80`}></div>
       

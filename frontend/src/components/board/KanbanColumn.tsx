@@ -21,7 +21,7 @@ const KanbanColumn = ({ id, title, applications, onCardClick }: Props) => {
   });
 
   return (
-    <div className="flex flex-col w-[320px] shrink-0 mx-3">
+    <div className="flex flex-col w-[320px] shrink-0 mx-3 h-full max-h-full">
       <div className="flex items-center justify-between mb-4 px-3 py-2 bg-surface-elevated/50 rounded-xl border border-border shadow-sm">
         <h2 className="font-semibold text-foreground text-sm tracking-wide">{title}</h2>
         <span className="bg-surface-elevated border border-border px-2.5 py-0.5 rounded-full text-xs font-medium text-muted">
@@ -31,7 +31,7 @@ const KanbanColumn = ({ id, title, applications, onCardClick }: Props) => {
       
       <div 
         ref={setNodeRef}
-        className="flex-1 bg-surface-elevated/30 rounded-2xl p-3 flex flex-col gap-3 min-h-[150px] border border-border/30"
+        className="flex-1 bg-surface-elevated/30 rounded-2xl p-3 flex flex-col gap-3 min-h-[150px] border border-border/30 overflow-y-auto"
       >
         <SortableContext items={applications.map(app => app._id)} strategy={verticalListSortingStrategy}>
           {applications.length === 0 ? (

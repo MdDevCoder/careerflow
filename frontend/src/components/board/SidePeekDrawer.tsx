@@ -101,7 +101,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
             <span className={`px-3 py-1 rounded-lg text-sm border font-medium ${
               application.health_score === 'HEALTHY' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
               application.health_score === 'AT_RISK' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
-              application.health_score === 'STALE' ? 'bg-gray-500/10 text-gray-500 border-gray-500/20' :
+              application.health_score === 'STALE' ? 'bg-surface-elevated text-muted border-border/50' :
               'bg-blue-500/10 text-blue-500 border-blue-500/20'
             }`}>
               {application.health_score}

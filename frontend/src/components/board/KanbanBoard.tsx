@@ -195,24 +195,24 @@ const KanbanBoard = () => {
       {showFilters && (
         <div className="h-12 border-b border-light-border/10 flex items-center gap-4 px-8 shrink-0 bg-surface/30">
           <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#121212] text-white">All Priorities</option>
-            <option value="HIGH" className="bg-[#121212] text-white">High</option>
-            <option value="MEDIUM" className="bg-[#121212] text-white">Medium</option>
-            <option value="LOW" className="bg-[#121212] text-white">Low</option>
+            <option value="ALL">All Priorities</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
           </select>
           <select value={filterHealth} onChange={(e) => setFilterHealth(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#121212] text-white">All Health Scores</option>
-            <option value="HEALTHY" className="bg-[#121212] text-white">Healthy</option>
-            <option value="AT_RISK" className="bg-[#121212] text-white">At Risk</option>
-            <option value="STALE" className="bg-[#121212] text-white">Stale</option>
-            <option value="SUCCESS" className="bg-[#121212] text-white">Success</option>
+            <option value="ALL">All Health Scores</option>
+            <option value="HEALTHY">Healthy</option>
+            <option value="AT_RISK">At Risk</option>
+            <option value="STALE">Stale</option>
+            <option value="SUCCESS">Success</option>
           </select>
           <select value={filterSource} onChange={(e) => setFilterSource(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#121212] text-white">All Sources</option>
-            <option value="LinkedIn" className="bg-[#121212] text-white">LinkedIn</option>
-            <option value="Direct" className="bg-[#121212] text-white">Direct</option>
-            <option value="Referral" className="bg-[#121212] text-white">Referral</option>
-            <option value="Indeed" className="bg-[#121212] text-white">Indeed</option>
+            <option value="ALL">All Sources</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Direct">Direct</option>
+            <option value="Referral">Referral</option>
+            <option value="Indeed">Indeed</option>
           </select>
           {(filterPriority !== 'ALL' || filterHealth !== 'ALL' || filterSource !== 'ALL') && (
             <button onClick={() => { setFilterPriority('ALL'); setFilterHealth('ALL'); setFilterSource('ALL'); }} className="text-xs text-stale hover:text-foreground hover:underline ml-2">Clear Filters</button>

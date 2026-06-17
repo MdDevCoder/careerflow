@@ -57,18 +57,18 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
     <form onSubmit={handleSubmit(handleFormSubmit)} className="p-6 space-y-6 animate-in fade-in duration-300">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-stale uppercase mb-1">Status</label>
-          <select {...register('status')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
-            {['Wishlist', 'Applied', 'Assessment', 'Interview', 'Offer', 'Rejected', 'Accepted'].map(s => <option key={s} value={s} className="bg-[#1F2937] text-white">{s}</option>)}
+          <label htmlFor="app_status" className="block text-xs font-medium text-muted uppercase mb-1">Status</label>
+          <select id="app_status" {...register('status')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+            {['Wishlist', 'Applied', 'Assessment', 'Interview', 'Offer', 'Rejected', 'Accepted'].map(s => <option key={s} value={s}>{s}</option>)}
           </select>
           {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
         </div>
         <div>
-          <label className="block text-xs font-medium text-stale uppercase mb-1">Priority</label>
-          <select {...register('priority')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="LOW" className="bg-[#1F2937] text-white">Low</option>
-            <option value="MEDIUM" className="bg-[#1F2937] text-white">Medium</option>
-            <option value="HIGH" className="bg-[#1F2937] text-white">High</option>
+          <label htmlFor="app_priority" className="block text-xs font-medium text-muted uppercase mb-1">Priority</label>
+          <select id="app_priority" {...register('priority')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
           </select>
           {errors.priority && <p className="text-red-500 text-xs mt-1">{errors.priority.message}</p>}
         </div>
@@ -76,18 +76,18 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-stale uppercase mb-1">Source</label>
-          <input type="text" {...register('source')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="LinkedIn, Indeed..." />
+          <label htmlFor="app_source" className="block text-xs font-medium text-muted uppercase mb-1">Source</label>
+          <input id="app_source" type="text" {...register('source')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="LinkedIn, Indeed..." />
           {errors.source && <p className="text-red-500 text-xs mt-1">{errors.source.message}</p>}
         </div>
         <div className="flex gap-2">
           <div className="w-1/2">
-            <label className="block text-xs font-medium text-stale uppercase mb-1">Min Salary</label>
-            <input type="number" {...register('salary_min', { valueAsNumber: true })} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="90000" />
+            <label htmlFor="app_salary_min" className="block text-xs font-medium text-muted uppercase mb-1">Min Salary</label>
+            <input id="app_salary_min" type="number" {...register('salary_min', { valueAsNumber: true })} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="90000" />
           </div>
           <div className="w-1/2">
-            <label className="block text-xs font-medium text-stale uppercase mb-1">Max Salary</label>
-            <input type="number" {...register('salary_max', { valueAsNumber: true })} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="120000" />
+            <label htmlFor="app_salary_max" className="block text-xs font-medium text-muted uppercase mb-1">Max Salary</label>
+            <input id="app_salary_max" type="number" {...register('salary_max', { valueAsNumber: true })} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="120000" />
           </div>
         </div>
       </div>
@@ -95,22 +95,23 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
       <div className="bg-primary/5 p-4 rounded-xl border border-primary/10 space-y-4">
         <h3 className="text-sm font-semibold text-primary uppercase tracking-wider">Contact Details</h3>
         <div>
-          <label className="block text-xs font-medium text-stale uppercase mb-1">Contact Person</label>
-          <input type="text" {...register('contact_person')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="John Doe, Recruiter" />
+          <label htmlFor="app_contact_person" className="block text-xs font-medium text-muted uppercase mb-1">Contact Person</label>
+          <input id="app_contact_person" type="text" {...register('contact_person')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="John Doe, Recruiter" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-stale uppercase mb-1">Contact Email</label>
-          <input type="email" {...register('contact_email')} className="w-full bg-white/5 border border-white/5 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="john@company.com" />
+          <label htmlFor="app_contact_email" className="block text-xs font-medium text-muted uppercase mb-1">Contact Email</label>
+          <input id="app_contact_email" type="email" {...register('contact_email')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="john@company.com" />
           {errors.contact_email && <p className="text-red-500 text-xs mt-1">{errors.contact_email.message}</p>}
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-stale uppercase mb-1">Rich Notes</label>
+        <label htmlFor="app_notes" className="block text-xs font-medium text-muted uppercase mb-1">Rich Notes</label>
         <textarea 
+          id="app_notes"
           {...register('application_notes')} 
           rows={8}
-          className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary resize-y" 
+          className="w-full bg-surface-elevated border border-border rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary resize-y" 
           placeholder="Document your interview questions, company research, and thoughts here..." 
         />
       </div>
@@ -125,7 +126,7 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
         <button type="submit" disabled={isSubmitting || isPending} className="flex-1 bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition-all flex justify-center items-center gap-2">
           {isPending ? 'Saving...' : <><Check size={16} /> Save Changes</>}
         </button>
-        <button type="button" onClick={onCancel} className="px-6 bg-white/5 text-foreground font-semibold py-3 rounded-xl hover:bg-white/10 transition-all">
+        <button type="button" onClick={onCancel} className="px-6 bg-surface-elevated border border-border text-foreground font-semibold py-3 rounded-xl hover:bg-border transition-all">
           Cancel
         </button>
       </div>

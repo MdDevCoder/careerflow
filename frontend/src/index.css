@@ -3,32 +3,59 @@
 @theme {
   --font-sans: "Inter", "Geist", sans-serif;
   
-  --color-background: #121212;
-  --color-surface: #1E1E1E;
-  --color-foreground: #F4F4F5;
-  
-  --color-light-background: #FAFAFA;
-  --color-light-surface: #FFFFFF;
-  --color-light-foreground: #111111;
-  --color-light-border: #EAEAEA;
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-foreground: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   
   --color-primary: #7C3AED;
   --color-secondary: #2563EB;
   
-  --color-healthy: #10B981;
-  --color-at-risk: #F59E0B;
-  --color-stale: #6B7280;
-  --color-success: #3B82F6;
+  /* Semantic Status Colors */
+  --color-healthy: var(--color-success);
+  --color-at-risk: var(--color-warning);
+  --color-stale: var(--color-muted);
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  --color-status-wishlist: var(--muted);
+  --color-status-applied: #3B82F6;
+  --color-status-assessment: #F59E0B;
+  --color-status-interview: #8B5CF6;
+  --color-status-offer: #10B981;
+  --color-status-rejected: #EF4444;
+  --color-status-accepted: #059669;
 }
 
 @layer base {
   :root {
-    color-scheme: dark;
+    /* Light Mode Palette */
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-elevated: #FFFFFF;
+    --fg: #111111;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    color-scheme: light;
   }
   
+  .dark {
+    /* Dark Mode Palette */
+    --bg: #0B0B0F;
+    --surface: #111318;
+    --surface-elevated: #181B22;
+    --fg: #F5F5F5;
+    --muted: #A1A1AA;
+    --border: rgba(255, 255, 255, 0.08);
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    @apply antialiased;
+    @apply antialiased transition-colors duration-200;
   }
 }

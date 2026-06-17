@@ -82,20 +82,20 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
         <div className="space-y-4">
           <div className="flex items-center gap-4">
              {application.company_logo ? (
-                <img src={application.company_logo} alt="logo" className="w-16 h-16 rounded-xl object-cover border border-white/10 shadow-lg" />
+                <img src={application.company_logo} alt="logo" className="w-16 h-16 rounded-xl object-cover border border-border shadow-lg" />
               ) : (
-                <div className="w-16 h-16 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-bold text-2xl text-stale uppercase shadow-lg">
+                <div className="w-16 h-16 rounded-xl bg-surface-elevated border border-border flex items-center justify-center font-bold text-2xl text-muted uppercase shadow-lg">
                   {application.company_name.substring(0, 2)}
                 </div>
               )}
              <div>
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">{application.job_title}</h1>
-                <p className="text-stale text-lg">{application.company_name}</p>
+                <p className="text-muted text-lg">{application.company_name}</p>
              </div>
           </div>
           <div className="flex flex-wrap gap-2 pt-2">
-            <span className="px-3 py-1 bg-white/5 rounded-lg text-sm border border-light-border/5 flex items-center gap-2">
-              <Building2 size={14} className="text-stale" />
+            <span className="px-3 py-1 bg-surface-elevated rounded-lg text-sm border border-border flex items-center gap-2 text-foreground">
+              <Building2 size={14} className="text-muted" />
               {application.status}
             </span>
             <span className={`px-3 py-1 rounded-lg text-sm border font-medium ${
@@ -117,33 +117,33 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white/5 p-4 rounded-xl border border-light-border/5">
-            <div className="flex items-center gap-2 text-stale text-xs uppercase font-medium mb-1">
+          <div className="bg-surface-elevated p-4 rounded-xl border border-border">
+            <div className="flex items-center gap-2 text-muted text-xs uppercase font-medium mb-1">
               <MapPin size={12} /> Location
             </div>
-            <div className="font-medium text-sm">{application.location || 'Not specified'}</div>
+            <div className="font-medium text-sm text-foreground">{application.location || 'Not specified'}</div>
           </div>
-          <div className="bg-white/5 p-4 rounded-xl border border-light-border/5">
-            <div className="flex items-center gap-2 text-stale text-xs uppercase font-medium mb-1">
+          <div className="bg-surface-elevated p-4 rounded-xl border border-border">
+            <div className="flex items-center gap-2 text-muted text-xs uppercase font-medium mb-1">
               <DollarSign size={12} /> Compensation
             </div>
-            <div className="font-medium text-sm">
+            <div className="font-medium text-sm text-foreground">
               {application.salary_min ? `${application.currency === 'USD' ? '$' : ''}${application.salary_min/1000}k - ${application.salary_max!/1000}k` : 'Not specified'}
             </div>
           </div>
-          <div className="bg-white/5 p-4 rounded-xl border border-light-border/5">
-            <div className="flex items-center gap-2 text-stale text-xs uppercase font-medium mb-1">
+          <div className="bg-surface-elevated p-4 rounded-xl border border-border">
+            <div className="flex items-center gap-2 text-muted text-xs uppercase font-medium mb-1">
               <Calendar size={12} /> Applied On
             </div>
-            <div className="font-medium text-sm">
+            <div className="font-medium text-sm text-foreground">
               {application.applied_date ? format(new Date(application.applied_date), 'MMM dd, yyyy') : 'Unknown'}
             </div>
           </div>
-          <div className="bg-white/5 p-4 rounded-xl border border-light-border/5">
-            <div className="flex items-center gap-2 text-stale text-xs uppercase font-medium mb-1">
+          <div className="bg-surface-elevated p-4 rounded-xl border border-border">
+            <div className="flex items-center gap-2 text-muted text-xs uppercase font-medium mb-1">
               <Tag size={12} /> Source
             </div>
-            <div className="font-medium text-sm">{application.source || 'Direct'}</div>
+            <div className="font-medium text-sm text-foreground">{application.source || 'Direct'}</div>
           </div>
         </div>
 
@@ -152,14 +152,14 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
             <h3 className="text-sm font-semibold text-primary uppercase tracking-wider">Contact Details</h3>
             <div className="flex flex-col gap-2">
               {application.contact_person && (
-                <div className="flex items-center gap-3 text-sm">
-                  <User size={16} className="text-stale" />
+                <div className="flex items-center gap-3 text-sm text-foreground">
+                  <User size={16} className="text-muted" />
                   <span>{application.contact_person}</span>
                 </div>
               )}
               {application.contact_email && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Mail size={16} className="text-stale" />
+                <div className="flex items-center gap-3 text-sm text-foreground">
+                  <Mail size={16} className="text-muted" />
                   <a href={`mailto:${application.contact_email}`} className="hover:underline">{application.contact_email}</a>
                 </div>
               )}
@@ -181,21 +181,21 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
         )}
 
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-stale uppercase tracking-wider flex justify-between items-center">
+          <h3 className="text-sm font-semibold text-muted uppercase tracking-wider flex justify-between items-center">
             <span>Application Notes</span>
-            <span className="text-xs text-stale/60 lowercase flex items-center gap-1"><Clock size={10} /> Last updated today</span>
+            <span className="text-xs text-muted/60 lowercase flex items-center gap-1"><Clock size={10} /> Last updated today</span>
           </h3>
-          <div className="bg-white/5 p-4 rounded-xl border border-light-border/5 min-h-[120px] text-sm leading-relaxed whitespace-pre-wrap">
-            {application.application_notes || <span className="text-stale italic">No notes recorded. Click edit to add your thoughts, interview questions, or next steps.</span>}
+          <div className="bg-surface-elevated p-4 rounded-xl border border-border min-h-[120px] text-sm leading-relaxed whitespace-pre-wrap text-foreground">
+            {application.application_notes || <span className="text-muted italic">No notes recorded. Click edit to add your thoughts, interview questions, or next steps.</span>}
           </div>
         </div>
 
-        <div className="space-y-4 pt-6 border-t border-light-border/10">
+        <div className="space-y-4 pt-6 border-t border-border">
           <div className="flex justify-between items-center">
-            <h3 className="text-sm font-semibold text-stale uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-muted uppercase tracking-wider flex items-center gap-2">
               <CalendarClock size={14} /> Interviews
             </h3>
-            <button onClick={() => setShowIntForm('new')} className="text-xs flex items-center gap-1 bg-white/5 hover:bg-white/10 text-foreground px-2 py-1 rounded transition-colors">
+            <button onClick={() => setShowIntForm('new')} className="text-xs flex items-center gap-1 bg-surface-elevated hover:bg-border text-foreground px-2 py-1 rounded transition-colors border border-border">
               <Plus size={12} /> Add Round
             </button>
           </div>
@@ -209,32 +209,32 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
           />
 
           {loadingInterviews ? (
-             <div className="text-xs text-stale italic">Loading interviews...</div>
+             <div className="text-xs text-muted italic">Loading interviews...</div>
           ) : interviews.length === 0 && !showIntForm ? (
-            <div className="border border-dashed border-light-border/10 rounded-xl p-4 text-center text-sm text-stale">
+            <div className="border border-dashed border-border rounded-xl p-4 text-center text-sm text-muted bg-surface-elevated/30">
               No interviews scheduled yet.
             </div>
           ) : (
             <div className="space-y-3">
               {interviews.map((int: Interview) => (
-                <div key={int._id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col gap-3 group relative overflow-hidden">
-                  <div className={`absolute top-0 left-0 w-1 h-full ${int.status === 'Completed' ? 'bg-emerald-500' : int.status === 'Cancelled' ? 'bg-red-500' : 'bg-primary'}`}></div>
+                <div key={int._id} className="bg-surface-elevated border border-border rounded-xl p-4 flex flex-col gap-3 group relative overflow-hidden">
+                  <div className={`absolute top-0 left-0 w-1 h-full ${int.status === 'Completed' ? 'bg-success' : int.status === 'Cancelled' ? 'bg-danger' : 'bg-primary'}`}></div>
                   <div className="flex justify-between items-start pl-2">
                     <div>
-                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                      <h4 className="font-semibold text-sm flex items-center gap-2 text-foreground">
                         {int.round_type}
-                        {int.status === 'Completed' && <span className="bg-emerald-500/10 text-emerald-500 text-[10px] px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Completed</span>}
-                        {int.status === 'Cancelled' && <span className="bg-red-500/10 text-red-500 text-[10px] px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Cancelled</span>}
+                        {int.status === 'Completed' && <span className="bg-success/10 text-success text-[10px] px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Completed</span>}
+                        {int.status === 'Cancelled' && <span className="bg-danger/10 text-danger text-[10px] px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Cancelled</span>}
                       </h4>
-                      <p className="text-xs text-stale mt-1 flex items-center gap-1.5">
+                      <p className="text-xs text-muted mt-1 flex items-center gap-1.5">
                         <Calendar size={12}/> {format(new Date(int.scheduled_date), 'MMMM d, yyyy h:mm a')}
                       </p>
                     </div>
-                    <button onClick={() => setShowIntForm(int._id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-stale hover:text-white p-1">
+                    <button onClick={() => setShowIntForm(int._id)} aria-label="Edit interview" className="opacity-0 group-hover:opacity-100 transition-opacity text-muted hover:text-foreground p-1">
                       <Edit2 size={12} />
                     </button>
                   </div>
-                  <div className="pl-2 flex gap-4 text-xs text-stale mt-1">
+                  <div className="pl-2 flex gap-4 text-xs text-muted mt-1">
                     <span className="flex items-center gap-1">
                       {int.interview_mode === 'Online' ? <Video size={12}/> : int.interview_mode === 'Onsite' ? <Map size={12}/> : <Phone size={12}/>}
                       {int.interview_mode}
@@ -244,7 +244,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
                     )}
                   </div>
                   {int.notes && (
-                    <div className="pl-2 mt-2 bg-black/20 p-2 rounded text-xs text-stale whitespace-pre-wrap font-mono">
+                    <div className="pl-2 mt-2 bg-surface p-2 border border-border rounded text-xs text-muted whitespace-pre-wrap font-mono">
                       {int.notes}
                     </div>
                   )}
@@ -286,21 +286,21 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
             role="dialog"
             aria-modal="true"
           >
-            <div className="sticky top-0 bg-surface/80 backdrop-blur-md px-6 py-4 border-b border-light-border/5 flex justify-between items-center z-10">
+            <div className="sticky top-0 bg-surface/80 backdrop-blur-md px-6 py-4 border-b border-border flex justify-between items-center z-10">
               <div className="flex items-center gap-4">
-                <h2 className="text-lg font-semibold text-stale">Application Details</h2>
+                <h2 className="text-lg font-semibold text-muted">Application Details</h2>
               </div>
               <div className="flex items-center gap-2">
                 {!isEditing ? (
-                  <button onClick={() => setIsEditing(true)} className="flex items-center gap-2 text-sm text-primary hover:text-white hover:bg-primary px-3 py-1.5 rounded-lg transition-colors border border-primary/20">
+                  <button onClick={() => setIsEditing(true)} className="flex items-center gap-2 text-sm text-primary hover:text-white hover:bg-primary px-3 py-1.5 rounded-lg transition-colors border border-primary/20 bg-primary/5">
                     <Edit2 size={14} /> Edit
                   </button>
                 ) : (
-                  <span className="text-xs text-emerald-500 font-medium px-2 py-1 bg-emerald-500/10 rounded-md">Edit Mode</span>
+                  <span className="text-xs text-success font-medium px-2 py-1 bg-success/10 rounded-md">Edit Mode</span>
                 )}
                 <button 
                   onClick={onClose}
-                  className="p-2 hover:bg-white/5 rounded-full transition-colors text-stale hover:text-foreground ml-2"
+                  className="p-2 hover:bg-surface-elevated rounded-full transition-colors text-muted hover:text-foreground ml-2"
                   aria-label="Close drawer"
                 >
                   <X size={20} />

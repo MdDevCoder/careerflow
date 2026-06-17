@@ -42,10 +42,10 @@ const Register = () => {
         >
           <div className="mb-10">
             <h1 className="text-4xl font-bold tracking-tight mb-2">Create an account</h1>
-            <p className="text-stale">Start tracking your career journey today.</p>
+            <p className="text-muted">Start tracking your career journey today.</p>
           </div>
 
-          {error && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-md text-sm">{error}</div>}
+          {error && <div className="mb-4 p-3 bg-danger/10 border border-danger/20 text-danger rounded-md text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -54,7 +54,7 @@ const Register = () => {
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-surface border border-light-border/10 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                className="w-full px-4 py-3 bg-surface-elevated border border-border rounded-xl focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                 placeholder="alex@example.com"
                 required 
               />
@@ -65,7 +65,7 @@ const Register = () => {
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-surface border border-light-border/10 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                className="w-full px-4 py-3 bg-surface-elevated border border-border rounded-xl focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                 placeholder="••••••••"
                 required 
               />
@@ -80,7 +80,7 @@ const Register = () => {
             </button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-stale">
+          <p className="mt-8 text-center text-sm text-muted">
             Already have an account? <Link to="/login" className="text-foreground hover:underline font-medium">Sign in</Link>
           </p>
         </motion.div>
@@ -94,19 +94,19 @@ const Register = () => {
              initial={{ opacity: 0, x: 20 }}
              animate={{ opacity: 1, x: 0 }}
              transition={{ duration: 0.8, delay: 0.2 }}
-             className="w-full max-w-sm rounded-3xl bg-background/50 backdrop-blur-xl border border-white/5 shadow-2xl p-8 space-y-6"
+             className="w-full max-w-sm rounded-3xl bg-background/50 backdrop-blur-xl border border-border shadow-2xl p-8 space-y-6"
            >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">✨</div>
                 <div>
-                  <div className="h-4 w-24 bg-white/20 rounded mb-2"></div>
-                  <div className="h-3 w-16 bg-white/10 rounded"></div>
+                  <div className="h-4 w-24 bg-border rounded mb-2"></div>
+                  <div className="h-3 w-16 bg-surface-elevated rounded"></div>
                 </div>
               </div>
               <div className="space-y-3">
-                <div className="h-2 w-full bg-white/5 rounded"></div>
-                <div className="h-2 w-5/6 bg-white/5 rounded"></div>
-                <div className="h-2 w-4/6 bg-white/5 rounded"></div>
+                <div className="h-2 w-full bg-surface-elevated rounded"></div>
+                <div className="h-2 w-5/6 bg-surface-elevated rounded"></div>
+                <div className="h-2 w-4/6 bg-surface-elevated rounded"></div>
               </div>
            </motion.div>
         </div>

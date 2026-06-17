@@ -15,7 +15,7 @@ const AnalyticsDashboard = () => {
   });
 
   if (isLoading || !data) {
-    return <div className="h-screen w-full flex items-center justify-center text-stale">Loading Analytics Engine...</div>;
+    return <div className="h-screen w-full flex items-center justify-center text-muted">Loading Analytics Engine...</div>;
   }
 
   const { kpis, funnel, sources, monthly, health, insights } = data;
@@ -26,10 +26,10 @@ const AnalyticsDashboard = () => {
       <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
       
       {/* Header */}
-      <div className="h-16 border-b border-light-border/10 flex items-center justify-between px-8 shrink-0 bg-surface/50 backdrop-blur-md sticky top-0 z-20">
+      <div className="h-16 border-b border-border flex items-center justify-between px-8 shrink-0 bg-surface/50 backdrop-blur-md sticky top-0 z-20">
         <div className="flex items-center gap-6">
-          <div className="flex bg-white/5 p-1 rounded-lg">
-            <Link to="/" className="flex items-center gap-2 px-4 py-1.5 rounded-md text-stale hover:text-foreground text-sm font-medium transition-colors">
+          <div className="flex bg-surface-elevated border border-border p-1 rounded-lg">
+            <Link to="/" className="flex items-center gap-2 px-4 py-1.5 rounded-md text-muted hover:text-foreground text-sm font-medium transition-colors">
               <LayoutGrid size={14} /> Board
             </Link>
             <Link to="/analytics" className="flex items-center gap-2 px-4 py-1.5 rounded-md bg-primary text-white text-sm font-medium transition-colors shadow-sm">
@@ -39,7 +39,7 @@ const AnalyticsDashboard = () => {
         </div>
         <button 
           onClick={logout}
-          className="flex items-center gap-2 text-sm text-stale hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
+          className="flex items-center gap-2 text-sm text-muted hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
         >
           <LogOut size={16} /> Logout
         </button>
@@ -56,11 +56,11 @@ const AnalyticsDashboard = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {insights.map((insight, idx) => (
-                <div key={idx} className="bg-surface/50 border border-light-border/5 p-4 rounded-xl flex items-start gap-3">
+                <div key={idx} className="bg-surface/50 border border-border p-4 rounded-xl flex items-start gap-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Zap size={14} className="text-primary" />
                   </div>
-                  <p className="text-sm text-stale leading-relaxed">{insight}</p>
+                  <p className="text-sm text-muted leading-relaxed">{insight}</p>
                 </div>
               ))}
             </div>
@@ -69,25 +69,25 @@ const AnalyticsDashboard = () => {
 
         {/* KPIs */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-surface/30 border border-light-border/5 p-5 rounded-2xl">
-            <div className="text-stale text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Total Apps <Target size={14}/></div>
+          <div className="bg-surface-elevated/50 border border-border p-5 rounded-2xl">
+            <div className="text-muted text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Total Apps <Target size={14}/></div>
             <div className="text-3xl font-bold">{kpis.totalApplications}</div>
-            <div className="text-xs text-emerald-500 mt-2">{kpis.activeApplications} Active</div>
+            <div className="text-xs text-success mt-2">{kpis.activeApplications} Active</div>
           </div>
-          <div className="bg-surface/30 border border-light-border/5 p-5 rounded-2xl">
-            <div className="text-stale text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Interviews <Calendar size={14}/></div>
+          <div className="bg-surface-elevated/50 border border-border p-5 rounded-2xl">
+            <div className="text-muted text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Interviews <Calendar size={14}/></div>
             <div className="text-3xl font-bold">{kpis.interviewsScheduled}</div>
             <div className="text-xs text-primary mt-2">{kpis.interviewsCompleted} Completed</div>
           </div>
-          <div className="bg-surface/30 border border-light-border/5 p-5 rounded-2xl">
-            <div className="text-stale text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Success Rate <CheckCircle2 size={14}/></div>
+          <div className="bg-surface-elevated/50 border border-border p-5 rounded-2xl">
+            <div className="text-muted text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Success Rate <CheckCircle2 size={14}/></div>
             <div className="text-3xl font-bold">{kpis.successRate}%</div>
-            <div className="text-xs text-stale mt-2">{kpis.offersReceived} Offers</div>
+            <div className="text-xs text-muted mt-2">{kpis.offersReceived} Offers</div>
           </div>
-          <div className="bg-surface/30 border border-light-border/5 p-5 rounded-2xl">
-            <div className="text-stale text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Conv. Rate <TrendingUp size={14}/></div>
+          <div className="bg-surface-elevated/50 border border-border p-5 rounded-2xl">
+            <div className="text-muted text-xs font-semibold uppercase tracking-wider mb-1 flex items-center justify-between">Conv. Rate <TrendingUp size={14}/></div>
             <div className="text-3xl font-bold">{kpis.interviewConversionRate}%</div>
-            <div className="text-xs text-red-400 mt-2">{kpis.applicationsRejected} Rejections</div>
+            <div className="text-xs text-danger mt-2">{kpis.applicationsRejected} Rejections</div>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ const AnalyticsDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Funnel */}
-          <div className="bg-surface/30 border border-light-border/5 p-6 rounded-2xl h-[400px]">
+          <div className="bg-surface-elevated/50 border border-border p-6 rounded-2xl h-[400px]">
             <h2 className="text-sm font-semibold text-foreground mb-6">Application Funnel</h2>
             <ResponsiveContainer width="100%" height="100%">
               <FunnelChart>
@@ -115,7 +115,7 @@ const AnalyticsDashboard = () => {
           </div>
 
           {/* Monthly Trend */}
-          <div className="bg-surface/30 border border-light-border/5 p-6 rounded-2xl h-[400px]">
+          <div className="bg-surface-elevated/50 border border-border p-6 rounded-2xl h-[400px]">
             <h2 className="text-sm font-semibold text-foreground mb-6">Monthly Momentum</h2>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={monthly}>
@@ -135,7 +135,7 @@ const AnalyticsDashboard = () => {
           </div>
 
           {/* Sources */}
-          <div className="bg-surface/30 border border-light-border/5 p-6 rounded-2xl h-[400px]">
+          <div className="bg-surface-elevated/50 border border-border p-6 rounded-2xl h-[400px]">
             <h2 className="text-sm font-semibold text-foreground mb-6">Source Performance</h2>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={sources}>
@@ -150,7 +150,7 @@ const AnalyticsDashboard = () => {
           </div>
 
           {/* Health Score Pie */}
-          <div className="bg-surface/30 border border-light-border/5 p-6 rounded-2xl h-[400px]">
+          <div className="bg-surface-elevated/50 border border-border p-6 rounded-2xl h-[400px]">
             <h2 className="text-sm font-semibold text-foreground mb-6">Pipeline Health</h2>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

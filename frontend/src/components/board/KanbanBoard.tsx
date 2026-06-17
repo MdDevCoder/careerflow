@@ -8,6 +8,7 @@ import KanbanColumn from './KanbanColumn';
 import KanbanCard from './KanbanCard';
 import SidePeekDrawer from './SidePeekDrawer';
 import NewApplicationModal from './NewApplicationModal';
+import { ThemeSwitcher } from '../ThemeSwitcher';
 import { Search, LogOut, Filter, CalendarClock, Building2, Calendar, BarChart3, LayoutGrid, Plus } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { format } from 'date-fns';
@@ -143,34 +144,34 @@ const KanbanBoard = () => {
     }
   };
 
-  if (isLoading) return <div className="p-8 text-stale">Loading board...</div>;
+  if (isLoading) return <div className="p-8 text-muted">Loading board...</div>;
 
   return (
     <div className="flex flex-col h-screen w-full bg-background overflow-hidden relative">
       {/* Board Header */}
-      <div className="h-16 border-b border-light-border/10 flex items-center justify-between px-8 shrink-0 bg-surface/50 backdrop-blur-md sticky top-0 z-10">
+      <div className="h-16 border-b border-border flex items-center justify-between px-8 shrink-0 bg-surface/80 backdrop-blur-md sticky top-0 z-10">
         <div className="flex items-center gap-6">
-          <div className="flex bg-white/5 p-1 rounded-lg">
+          <div className="flex bg-surface-elevated border border-border p-1 rounded-lg">
             <Link to="/" className="flex items-center gap-2 px-4 py-1.5 rounded-md bg-primary text-white text-sm font-medium transition-colors shadow-sm">
               <LayoutGrid size={14} /> Board
             </Link>
-            <Link to="/analytics" className="flex items-center gap-2 px-4 py-1.5 rounded-md text-stale hover:text-foreground text-sm font-medium transition-colors">
+            <Link to="/analytics" className="flex items-center gap-2 px-4 py-1.5 rounded-md text-muted hover:text-foreground text-sm font-medium transition-colors">
               <BarChart3 size={14} /> Analytics
             </Link>
           </div>
           
-          <div className="h-4 w-[1px] bg-white/10"></div>
+          <div className="h-4 w-[1px] bg-border"></div>
           <div className="relative">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stale" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input 
               type="text" 
               placeholder="Search applications..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-white/5 border border-white/5 rounded-lg py-1.5 pl-9 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary w-64 transition-all"
+              className="bg-surface-elevated border border-border rounded-lg py-1.5 pl-9 pr-4 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary w-64 transition-all"
             />
           </div>
-          <button onClick={() => setShowFilters(!showFilters)} className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg transition-colors ${showFilters ? 'bg-primary text-white' : 'text-stale hover:text-foreground hover:bg-white/5'}`}>
+          <button onClick={() => setShowFilters(!showFilters)} className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg transition-colors ${showFilters ? 'bg-primary text-white' : 'text-muted hover:text-foreground hover:bg-surface-elevated'}`}>
             <Filter size={14} /> Filters {(filterPriority !== 'ALL' || filterHealth !== 'ALL' || filterSource !== 'ALL') && <span className="w-2 h-2 rounded-full bg-primary ml-1"></span>}
           </button>
         </div>
@@ -181,10 +182,11 @@ const KanbanBoard = () => {
           >
             <Plus size={16} /> New Application
           </button>
-          <div className="h-4 w-[1px] bg-white/10"></div>
+          <ThemeSwitcher />
+          <div className="h-4 w-[1px] bg-border"></div>
           <button 
             onClick={logout}
-            className="flex items-center gap-2 text-sm text-stale hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
+            className="flex items-center gap-2 text-sm text-muted hover:text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
           >
             <LogOut size={16} /> Logout
           </button>
@@ -193,57 +195,57 @@ const KanbanBoard = () => {
 
       {/* Filter Bar */}
       {showFilters && (
-        <div className="h-12 border-b border-light-border/10 flex items-center gap-4 px-8 shrink-0 bg-surface/30">
-          <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#1F2937] text-white">All Priorities</option>
-            <option value="HIGH" className="bg-[#1F2937] text-white">High</option>
-            <option value="MEDIUM" className="bg-[#1F2937] text-white">Medium</option>
-            <option value="LOW" className="bg-[#1F2937] text-white">Low</option>
+        <div className="h-12 border-b border-border flex items-center gap-4 px-8 shrink-0 bg-surface-elevated/50">
+          <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)} className="bg-surface-elevated border border-border rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+            <option value="ALL">All Priorities</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
           </select>
-          <select value={filterHealth} onChange={(e) => setFilterHealth(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#1F2937] text-white">All Health Scores</option>
-            <option value="HEALTHY" className="bg-[#1F2937] text-white">Healthy</option>
-            <option value="AT_RISK" className="bg-[#1F2937] text-white">At Risk</option>
-            <option value="STALE" className="bg-[#1F2937] text-white">Stale</option>
-            <option value="SUCCESS" className="bg-[#1F2937] text-white">Success</option>
+          <select value={filterHealth} onChange={(e) => setFilterHealth(e.target.value)} className="bg-surface-elevated border border-border rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+            <option value="ALL">All Health Scores</option>
+            <option value="HEALTHY">Healthy</option>
+            <option value="AT_RISK">At Risk</option>
+            <option value="STALE">Stale</option>
+            <option value="SUCCESS">Success</option>
           </select>
-          <select value={filterSource} onChange={(e) => setFilterSource(e.target.value)} className="bg-white/5 border border-white/5 rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="ALL" className="bg-[#1F2937] text-white">All Sources</option>
-            <option value="LinkedIn" className="bg-[#1F2937] text-white">LinkedIn</option>
-            <option value="Direct" className="bg-[#1F2937] text-white">Direct</option>
-            <option value="Referral" className="bg-[#1F2937] text-white">Referral</option>
-            <option value="Indeed" className="bg-[#1F2937] text-white">Indeed</option>
+          <select value={filterSource} onChange={(e) => setFilterSource(e.target.value)} className="bg-surface-elevated border border-border rounded px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary">
+            <option value="ALL">All Sources</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Direct">Direct</option>
+            <option value="Referral">Referral</option>
+            <option value="Indeed">Indeed</option>
           </select>
           {(filterPriority !== 'ALL' || filterHealth !== 'ALL' || filterSource !== 'ALL') && (
-            <button onClick={() => { setFilterPriority('ALL'); setFilterHealth('ALL'); setFilterSource('ALL'); }} className="text-xs text-stale hover:text-foreground hover:underline ml-2">Clear Filters</button>
+            <button onClick={() => { setFilterPriority('ALL'); setFilterHealth('ALL'); setFilterSource('ALL'); }} className="text-xs text-muted hover:text-foreground hover:underline ml-2">Clear Filters</button>
           )}
         </div>
       )}
 
       {/* Upcoming Interviews Smart Reminders */}
       {upcomingInterviews.length > 0 && (
-        <div className="border-b border-light-border/10 bg-surface/20 px-8 py-4 shrink-0 overflow-x-auto">
-          <h3 className="text-sm font-semibold text-stale uppercase tracking-wider mb-3 flex items-center gap-2">
+        <div className="border-b border-border bg-surface-elevated/30 px-8 py-4 shrink-0 overflow-x-auto">
+          <h3 className="text-sm font-semibold text-muted uppercase tracking-wider mb-3 flex items-center gap-2">
             <CalendarClock size={16} className="text-primary" /> Upcoming Interviews
           </h3>
           <div className="flex gap-4">
             {upcomingInterviews.map((int: any) => (
-              <div key={int._id} className="bg-white/5 border border-white/5 rounded-xl p-3 min-w-[240px] flex-shrink-0 hover:border-primary/30 transition-colors cursor-pointer" onClick={() => {
+              <div key={int._id} className="bg-surface-elevated border border-border rounded-xl p-3 min-w-[240px] flex-shrink-0 hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer" onClick={() => {
                 const app = applications.find(a => a._id === int.application_id);
                 if (app) setSelectedApplication(app);
               }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Building2 size={14} className="text-stale" />
+                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center">
+                    <Building2 size={14} className="text-muted" />
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-foreground truncate w-40">{int.company_name}</h4>
-                    <p className="text-xs text-stale truncate w-40">{int.job_title}</p>
+                    <p className="text-xs text-muted truncate w-40">{int.job_title}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-3 text-xs">
                   <span className="bg-primary/10 text-primary px-2 py-0.5 rounded font-medium">{int.round_type}</span>
-                  <span className="text-stale flex items-center gap-1"><Calendar size={12}/> {format(new Date(int.scheduled_date), 'MMM d, h:mm a')}</span>
+                  <span className="text-muted flex items-center gap-1"><Calendar size={12}/> {format(new Date(int.scheduled_date), 'MMM d, h:mm a')}</span>
                 </div>
               </div>
             ))}
@@ -277,15 +279,19 @@ const KanbanBoard = () => {
               <button 
                 onClick={() => fetchNextPage()} 
                 disabled={isFetchingNextPage}
-                className="px-6 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-medium text-stale rounded-full transition-colors"
+                className="px-6 py-2 bg-surface-elevated border border-border hover:bg-surface text-sm font-medium text-muted rounded-full transition-colors"
               >
                 {isFetchingNextPage ? 'Loading more...' : 'Load older applications'}
               </button>
             </div>
           )}
 
-          <DragOverlay>
-            {activeApplication && <KanbanCard application={activeApplication} onClick={() => {}} />}
+          <DragOverlay dropAnimation={null}>
+            {activeApplication && (
+              <div className="rotate-2 scale-105 shadow-2xl transition-all duration-200 cursor-grabbing origin-top-left">
+                <KanbanCard application={activeApplication} onClick={() => {}} />
+              </div>
+            )}
           </DragOverlay>
         </DndContext>
       </div>

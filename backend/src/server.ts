@@ -2,33 +2,37 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
+import logger from './utils/logger';
 import authRoutes from './routes/auth.routes';
 import applicationRoutes from './routes/application.routes';
 import interviewRoutes from './routes/interview.routes';
 import documentRoutes from './routes/document.routes';
 import analyticsRoutes from './routes/analytics.routes';
 
-dotenv.config();
-
-if (!process.env.JWT_SECRET) {
-  console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');
-  process.exit(1);
-}
+import { env } from './config/env';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = env.PORT;
 
 const corsOptions = {
   origin: [
     'http://localhost:5173',
     'https://careerflow-beta.vercel.app',
-    process.env.FRONTEND_URL || ''
+    env.FRONTEND_URL || ''
   ],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+const morganFormat = ':method :url :status :res[content-length] - :response-time ms';
+app.use(morgan(morganFormat, {
+  stream: {
+    write: (message) => logger.http(message.trim())
+  }
+}));
 
 // Routes scaffolding
 app.use('/api/auth', authRoutes);
@@ -37,20 +41,24 @@ app.use('/api/interviews', interviewRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
+import { errorHandler } from './middleware/errorMiddleware';
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'CareerFlow API is running' });
 });
 
+app.use(errorHandler);
+
 // Connect to MongoDB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/careerflow';
+const MONGODB_URI = env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
-    console.log('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      logger.info(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.error('MongoDB connection error:', error);
+    logger.error(`MongoDB connection error: ${error.message}`);
   });

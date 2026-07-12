@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { format } from 'date-fns';
@@ -8,7 +9,7 @@ interface Props {
   onClick: (app: Application) => void;
 }
 
-const KanbanCard = ({ application, onClick }: Props) => {
+const KanbanCard = memo(({ application, onClick }: Props) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: application._id,
     data: {
@@ -91,6 +92,6 @@ const KanbanCard = ({ application, onClick }: Props) => {
       </div>
     </div>
   );
-};
+});
 
 export default KanbanCard;

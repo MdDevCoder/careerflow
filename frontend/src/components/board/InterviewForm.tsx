@@ -21,9 +21,10 @@ interface Props {
   setShowIntForm: (val: string | false) => void;
   onSubmit: (data: IntValues) => void;
   isPending: boolean;
+  isError: boolean;
 }
 
-const InterviewForm = ({ interviews, showIntForm, setShowIntForm, onSubmit, isPending }: Props) => {
+const InterviewForm = ({ interviews, showIntForm, setShowIntForm, onSubmit, isPending, isError }: Props) => {
   const { register, handleSubmit, reset } = useForm<IntValues>({
     resolver: zodResolver(intSchema),
   });
@@ -84,6 +85,11 @@ const InterviewForm = ({ interviews, showIntForm, setShowIntForm, onSubmit, isPe
         <label htmlFor="int_notes" className="block text-[10px] uppercase text-muted mb-1">Notes / Links</label>
         <textarea id="int_notes" {...register('notes')} rows={2} className="w-full bg-surface-elevated border border-border rounded p-2 text-xs focus:ring-1 focus:ring-primary" placeholder="Zoom link, preparation notes..." />
       </div>
+      {isError && (
+        <div className="p-2 bg-red-500/10 border border-red-500/20 text-red-500 rounded text-xs">
+          Failed to save interview. Please try again.
+        </div>
+      )}
       <button type="submit" disabled={isPending} className="w-full bg-primary text-white py-2 rounded text-xs font-semibold hover:bg-primary/90 transition-colors">
         Save Interview
       </button>

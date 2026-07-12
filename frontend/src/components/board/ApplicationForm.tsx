@@ -9,8 +9,8 @@ const formSchema = z.object({
   status: z.enum(['Wishlist', 'Applied', 'Assessment', 'Interview', 'Offer', 'Rejected', 'Accepted']),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH']),
   source: z.string().min(1, 'Source is required'),
-  salary_min: z.number().optional().nullable(),
-  salary_max: z.number().optional().nullable(),
+  salary_min: z.preprocess((val) => (val === '' || Number.isNaN(Number(val)) ? null : Number(val)), z.number().nullable().optional()),
+  salary_max: z.preprocess((val) => (val === '' || Number.isNaN(Number(val)) ? null : Number(val)), z.number().nullable().optional()),
   contact_person: z.string().optional().nullable(),
   contact_email: z.string().email('Invalid email').optional().or(z.literal('')).nullable(),
   application_notes: z.string().optional().nullable(),
@@ -20,7 +20,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface Props {
   application: Application;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: Partial<FormValues>) => void;
   onCancel: () => void;
   isPending: boolean;
   isError: boolean;
@@ -45,12 +45,7 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
   }, [application, reset]);
 
   const handleFormSubmit = (data: FormValues) => {
-    const cleanedData: any = {};
-    Object.keys(data).forEach(key => {
-      const val = (data as any)[key];
-      if (val !== null) cleanedData[key] = val;
-    });
-    onSubmit(cleanedData);
+    onSubmit(data as Partial<Application>);
   };
 
   return (
@@ -83,11 +78,11 @@ const ApplicationForm = ({ application, onSubmit, onCancel, isPending, isError }
         <div className="flex gap-2">
           <div className="w-1/2">
             <label htmlFor="app_salary_min" className="block text-xs font-medium text-muted uppercase mb-1">Min Salary</label>
-            <input id="app_salary_min" type="number" {...register('salary_min', { valueAsNumber: true })} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="90000" />
+            <input id="app_salary_min" type="number" {...register('salary_min')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="90000" />
           </div>
           <div className="w-1/2">
             <label htmlFor="app_salary_max" className="block text-xs font-medium text-muted uppercase mb-1">Max Salary</label>
-            <input id="app_salary_max" type="number" {...register('salary_max', { valueAsNumber: true })} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="120000" />
+            <input id="app_salary_max" type="number" {...register('salary_max')} className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="120000" />
           </div>
         </div>
       </div>

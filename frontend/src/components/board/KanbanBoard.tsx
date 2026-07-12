@@ -3,12 +3,13 @@ import { useInfiniteQuery, useMutation, useQueryClient, useQuery } from '@tansta
 import { DndContext, type DragEndEvent, DragOverlay, type DragStartEvent, PointerSensor, KeyboardSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { getApplications, updateApplicationStatus, type Application } from '../../api/applications';
-import { getUpcomingInterviews } from '../../api/interviews';
+import { getUpcomingInterviews, type Interview } from '../../api/interviews';
 import KanbanColumn from './KanbanColumn';
 import KanbanCard from './KanbanCard';
 import SidePeekDrawer from './SidePeekDrawer';
 import NewApplicationModal from './NewApplicationModal';
 import { ThemeSwitcher } from '../ThemeSwitcher';
+import { Skeleton } from '../ui/Skeleton';
 import { Search, LogOut, Filter, CalendarClock, Building2, Calendar, BarChart3, LayoutGrid, Plus } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { format } from 'date-fns';
@@ -41,7 +42,7 @@ const KanbanBoard = () => {
     initialPageParam: 1,
   });
 
-  const applications = applicationsData ? applicationsData.pages.flat() : [];
+  const applications = useMemo(() => applicationsData ? applicationsData.pages.flat() : [], [applicationsData]);
 
   const { data: upcomingInterviews = [] } = useQuery({
     queryKey: ['upcomingInterviews'],
@@ -59,11 +60,11 @@ const KanbanBoard = () => {
       await queryClient.cancelQueries({ queryKey: ['applications'] });
       const previousApps = queryClient.getQueryData(['applications']);
       
-      queryClient.setQueryData(['applications'], (old: any) => {
+      queryClient.setQueryData(['applications'], (old: { pages: Application[][] } | undefined) => {
         if (!old || !old.pages) return old;
         return {
           ...old,
-          pages: old.pages.map((page: Application[]) => 
+          pages: old.pages.map(page => 
             page.map(app => app._id === id ? { ...app, status } : app)
           )
         };
@@ -111,7 +112,7 @@ const KanbanBoard = () => {
       }
     });
     return acc;
-  }, [applications, search]);
+  }, [applications, search, filterPriority, filterHealth, filterSource]);
 
   const onDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.type === 'Application') {
@@ -144,7 +145,53 @@ const KanbanBoard = () => {
     }
   };
 
-  if (isLoading) return <div className="p-8 text-muted">Loading board...</div>;
+  const announcements = {
+    onDragStart({ active }: { active: { id: string | number } }) {
+      return `Picked up application card ${active.id}.`;
+    },
+    onDragOver({ active, over }: { active: { id: string | number }, over?: { id: string | number } | null }) {
+      if (over) {
+        return `Application card ${active.id} was moved over column ${over.id}.`;
+      }
+      return `Application card ${active.id} is no longer over a column.`;
+    },
+    onDragEnd({ active, over }: { active: { id: string | number }, over?: { id: string | number } | null }) {
+      if (over) {
+        return `Application card ${active.id} was dropped into column ${over.id}.`;
+      }
+      return `Application card ${active.id} was dropped.`;
+    },
+    onDragCancel({ active }: { active: { id: string | number } }) {
+      return `Dragging was cancelled. Application card ${active.id} was dropped.`;
+    },
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col h-screen w-full bg-background overflow-hidden relative">
+        <div className="h-16 border-b border-border flex items-center justify-between px-8 shrink-0 bg-surface/80">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-8 w-32" />
+        </div>
+        <div className="flex-1 overflow-hidden p-8 flex gap-4">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="flex-shrink-0 w-80 bg-surface/50 rounded-xl flex flex-col h-full border border-border">
+              <div className="p-4 border-b border-border flex items-center justify-between">
+                <Skeleton className="h-5 w-24" />
+                <Skeleton className="h-5 w-8 rounded-full" />
+              </div>
+              <div className="p-3 flex-1 flex flex-col gap-3">
+                <Skeleton className="h-32 w-full rounded-lg" />
+                <Skeleton className="h-32 w-full rounded-lg" />
+                <Skeleton className="h-32 w-full rounded-lg" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen w-full bg-background overflow-hidden relative">
@@ -229,7 +276,7 @@ const KanbanBoard = () => {
             <CalendarClock size={16} className="text-primary" /> Upcoming Interviews
           </h3>
           <div className="flex gap-4">
-            {upcomingInterviews.map((int: any) => (
+            {upcomingInterviews.map((int: Interview) => (
               <div key={int._id} className="bg-surface-elevated border border-border rounded-xl p-3 min-w-[240px] flex-shrink-0 hover:border-primary/50 hover:shadow-lg transition-all cursor-pointer" onClick={() => {
                 const app = applications.find(a => a._id === int.application_id);
                 if (app) setSelectedApplication(app);
@@ -261,7 +308,7 @@ const KanbanBoard = () => {
           }
         }}
       >
-        <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <DndContext sensors={sensors} accessibility={{ announcements }} onDragStart={onDragStart} onDragEnd={onDragEnd}>
           <div className="flex h-full gap-4 pb-4">
             {COLUMNS.map(col => (
               <KanbanColumn 

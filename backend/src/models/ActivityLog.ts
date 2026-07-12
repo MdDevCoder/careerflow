@@ -30,7 +30,6 @@ const ActivityLogSchema: Schema = new Schema({
   created_at: { type: Date, default: Date.now }
 });
 
-ActivityLogSchema.index({ application_id: 1 });
-ActivityLogSchema.index({ created_at: -1 });
+ActivityLogSchema.index({ application_id: 1, created_at: -1 });
 
 export default mongoose.model<IActivityLog>('ActivityLog', ActivityLogSchema);

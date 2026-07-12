@@ -44,11 +44,10 @@ const ApplicationSchema: Schema = new Schema({
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
-ApplicationSchema.index({ user_id: 1 });
-ApplicationSchema.index({ status: 1 });
-ApplicationSchema.index({ priority: 1 });
-ApplicationSchema.index({ source: 1 });
-ApplicationSchema.index({ applied_date: -1 });
-ApplicationSchema.index({ health_score: 1 });
+// Compound index to support getApplications with pagination and default sort
+ApplicationSchema.index({ user_id: 1, applied_date: -1, created_at: -1 });
+// Compound index for AnalyticsService which groups by status per user
+ApplicationSchema.index({ user_id: 1, status: 1 });
+ApplicationSchema.index({ user_id: 1, source: 1 });
 
 export default mongoose.model<IApplication>('Application', ApplicationSchema);

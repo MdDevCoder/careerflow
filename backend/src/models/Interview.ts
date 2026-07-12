@@ -22,8 +22,7 @@ const InterviewSchema: Schema = new Schema({
   status: { type: String, enum: ['Upcoming', 'Completed', 'Cancelled'], default: 'Upcoming' }
 });
 
-InterviewSchema.index({ application_id: 1 });
-InterviewSchema.index({ scheduled_date: 1 });
-InterviewSchema.index({ status: 1 });
+InterviewSchema.index({ application_id: 1, scheduled_date: 1 });
+InterviewSchema.index({ application_id: 1, status: 1, scheduled_date: 1 });
 
 export default mongoose.model<IInterview>('Interview', InterviewSchema);

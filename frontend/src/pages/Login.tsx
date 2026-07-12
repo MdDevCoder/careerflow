@@ -20,8 +20,12 @@ const Login = () => {
       const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/login`, { email, password });
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || 'Login failed');
+      } else {
+        setError('Login failed');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -34,7 +38,7 @@ const Login = () => {
       const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/demo`);
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
-    } catch (err: any) {
+    } catch {
       setError('Demo login failed');
     } finally {
       setIsLoading(false);

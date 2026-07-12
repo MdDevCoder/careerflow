@@ -29,26 +29,48 @@ A modern, high-performance, data-driven job search management platform built wit
 - JWT (Authentication)
 - bcryptjs (Password Hashing)
 
-## 🚀 Local Setup
+## 🚀 Local Setup & Development Workflow
 
 ### Prerequisites
 - Node.js (v18+)
 - MongoDB (Running locally or MongoDB Atlas)
 
-### Backend
-1. `cd backend`
-2. `npm install`
-3. Create a `.env` file with `PORT=5000`, `MONGODB_URI`, and `JWT_SECRET`
-4. `npm run dev`
+### Environment Variables
 
-### Frontend
-1. `cd frontend`
-2. `npm install`
-3. `npm run dev`
+The backend uses a centralized validation approach (Zod) for environment variables. If required variables are missing, the server will fail fast on startup. Create a `.env` file in the `backend` directory:
 
-## 📦 Deployment Instructions
+```env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/careerflow
+JWT_SECRET=your_super_secret_jwt_key
+FRONTEND_URL=http://localhost:5173
+```
 
-1. **Environment Variables**: Ensure your production server has a strong `JWT_SECRET` and a secure MongoDB Atlas connection string.
-2. **Build Frontend**: Run `npm run build` inside the `frontend` directory. The `/dist` folder can be hosted on Vercel, Netlify, or S3.
-3. **Build Backend**: Run `npx tsc` inside the `backend` directory. Host the resulting `/dist` folder on Render, Heroku, or AWS EC2.
-4. **CORS**: Configure the backend `cors` middleware to accept requests *only* from your specific frontend deployment domain.
+In the `frontend` directory, create a `.env` file (if testing a remote API) or rely on Vite defaults:
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+### Development Workflow
+1. **Backend**: 
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+2. **Frontend**: 
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+3. Visit `http://localhost:5173` to view the application.
+
+## 📦 Production Deployment
+
+1. **Environment Configuration**: Ensure your production server has a strong `JWT_SECRET` and a secure MongoDB Atlas connection string. Set `NODE_ENV=production`. The application will instantly crash with descriptive logs if any required variable is omitted.
+2. **Database Indexes**: The MongoDB models are optimized with compound indexes for fast paginated and sorted queries (e.g. `user_id` + `applied_date`).
+3. **Build Frontend**: Run `npm run build` inside the `frontend` directory. The resulting `/dist` folder can be hosted on Vercel, Netlify, or S3.
+4. **Build Backend**: Run `npm run build` inside the `backend` directory. Host the resulting `/dist` folder on Render, Heroku, or AWS EC2. Start the server using `npm start`.
+5. **CORS**: Configure `FRONTEND_URL` in the backend environment variables to accept requests *only* from your specific frontend deployment domain.

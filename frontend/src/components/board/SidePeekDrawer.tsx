@@ -43,7 +43,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
   }, [application, onClose]);
 
   const updateMutation = useMutation({
-    mutationFn: (data: any) => updateApplication(application!._id, data),
+    mutationFn: (data: Partial<Application>) => updateApplication(application!._id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applications'] });
       queryClient.invalidateQueries({ queryKey: ['activities', application?._id] });
@@ -52,7 +52,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
   });
 
   const createIntMutation = useMutation({
-    mutationFn: (data: any) => createInterview(application!._id, data),
+    mutationFn: (data: Partial<Interview>) => createInterview(application!._id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews', application?._id] });
       queryClient.invalidateQueries({ queryKey: ['activities', application?._id] });
@@ -62,7 +62,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
   });
 
   const updateIntMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string, data: any }) => updateInterview(application!._id, id, data),
+    mutationFn: ({ id, data }: { id: string, data: Partial<Interview> }) => updateInterview(application!._id, id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews', application?._id] });
       queryClient.invalidateQueries({ queryKey: ['activities', application?._id] });
@@ -71,7 +71,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
     }
   });
 
-  const setIntStatus = (id: string, status: string) => {
+  const setIntStatus = (id: string, status: Interview['status']) => {
     updateIntMutation.mutate({ id, data: { status } });
   };
 
@@ -128,7 +128,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
               <DollarSign size={12} /> Compensation
             </div>
             <div className="font-medium text-sm text-foreground">
-              {application.salary_min ? `${application.currency === 'USD' ? '$' : ''}${application.salary_min/1000}k - ${application.salary_max!/1000}k` : 'Not specified'}
+              {application.salary_min ? `${application.currency === 'USD' ? '$' : application.currency ? application.currency + ' ' : ''}${application.salary_min/1000}k${application.salary_max ? ` - ${application.salary_max/1000}k` : ''}` : 'Not specified'}
             </div>
           </div>
           <div className="bg-surface-elevated p-4 rounded-xl border border-border">
@@ -206,6 +206,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
             setShowIntForm={setShowIntForm}
             onSubmit={(data) => showIntForm === 'new' ? createIntMutation.mutate(data) : updateIntMutation.mutate({ id: showIntForm as string, data })}
             isPending={createIntMutation.isPending || updateIntMutation.isPending}
+            isError={createIntMutation.isError || updateIntMutation.isError}
           />
 
           {loadingInterviews ? (
@@ -311,7 +312,7 @@ const SidePeekDrawer = ({ application, onClose }: Props) => {
             {isEditing ? (
               <ApplicationForm 
                 application={application} 
-                onSubmit={updateMutation.mutate} 
+                onSubmit={(data) => updateMutation.mutate(data as Partial<Application>)} 
                 onCancel={() => setIsEditing(false)}
                 isPending={updateMutation.isPending}
                 isError={updateMutation.isError}

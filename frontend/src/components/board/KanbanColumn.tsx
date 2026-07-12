@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus } from 'lucide-react';
@@ -11,7 +12,7 @@ interface Props {
   onCardClick: (app: Application) => void;
 }
 
-const KanbanColumn = ({ id, title, applications, onCardClick }: Props) => {
+const KanbanColumn = memo(({ id, title, applications, onCardClick }: Props) => {
   const { setNodeRef } = useDroppable({
     id,
     data: {
@@ -51,6 +52,6 @@ const KanbanColumn = ({ id, title, applications, onCardClick }: Props) => {
       </div>
     </div>
   );
-};
+});
 
 export default KanbanColumn;

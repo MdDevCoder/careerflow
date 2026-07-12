@@ -20,11 +20,15 @@ const Register = () => {
       const res = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/auth/register`, { email, password });
       setCredentials({ _id: res.data._id, email: res.data.email }, res.data.token);
       navigate('/');
-    } catch (err: any) {
-      if (err.response?.status === 409) {
-        setError('An account with this email already exists.');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 409) {
+          setError('An account with this email already exists.');
+        } else {
+          setError(err.response?.data?.message || 'Registration failed');
+        }
       } else {
-        setError(err.response?.data?.message || 'Registration failed');
+        setError('Registration failed');
       }
     } finally {
       setIsLoading(false);

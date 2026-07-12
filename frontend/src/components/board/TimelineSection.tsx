@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { History, Briefcase, Edit2, AlertCircle, CalendarClock, CheckCircle2, X, FileText } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import type { ActivityLog } from '../../api/applications';
 
 interface Props {
-  activities: any[];
+  activities: ActivityLog[];
   isLoading: boolean;
 }
 
@@ -45,7 +46,7 @@ const TimelineSection = ({ activities, isLoading }: Props) => {
           {activities.length === 0 && (
             <div className="text-sm text-muted italic">No activity recorded yet.</div>
           )}
-          {activities.map((activity: any, index: number) => (
+          {activities.map((activity, index: number) => (
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

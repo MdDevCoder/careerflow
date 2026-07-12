@@ -3,9 +3,8 @@ import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 import asyncHandler from 'express-async-handler';
 
-export interface AuthRequest extends Request {
-  user?: IUser;
-}
+import { AuthRequest } from '../types';
+import { env } from '../config/env';
 
 export const protect = asyncHandler(async (req: AuthRequest, res: Response, next: NextFunction) => {
   let token;
@@ -13,7 +12,7 @@ export const protect = asyncHandler(async (req: AuthRequest, res: Response, next
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+      const decoded: any = jwt.verify(token, env.JWT_SECRET);
 
       const user = await User.findById(decoded.userId).select('-password_hash');
       if (!user) {
